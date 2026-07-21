@@ -137,9 +137,18 @@ cat.ctx.getImageData(
     cat.canvas.height
 );
 
-alert(
-    catPixels.data.length
+removeBackground(
+    bgPixels,
+    catPixels
 );
+
+cat.ctx.putImageData(
+    catPixels,
+    0,
+    0
+);
+
+alert("背景削除成功！");
 }
 async function loadImage(file){
 
@@ -174,6 +183,30 @@ function imageToCanvas(image){
         canvas,
         ctx
     };
+    function removeBackground(bgPixels, catPixels){
+
+    const tolerance = 8;
+
+    const bg = bgPixels.data;
+    const cat = catPixels.data;
+
+    for(let i = 0; i < bg.length; i += 4){
+
+        const dr = Math.abs(bg[i] - cat[i]);
+        const dg = Math.abs(bg[i+1] - cat[i+1]);
+        const db = Math.abs(bg[i+2] - cat[i+2]);
+
+        if(
+            dr <= tolerance &&
+            dg <= tolerance &&
+            db <= tolerance
+        ){
+            cat[i+3] = 0;
+        }
+
+    }
+
+}
 
 }
 </script>
