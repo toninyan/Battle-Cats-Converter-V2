@@ -71,13 +71,16 @@ async function convert(){
 
     }
 
-   const backgroundImage =
+const backgroundImage =
 await loadImage(background);
 
+const bg =
+imageToCanvas(backgroundImage);
+
 alert(
-    backgroundImage.width +
+    bg.canvas.width +
     " × " +
-    backgroundImage.height
+    bg.canvas.height
 );
 
 }
@@ -97,6 +100,23 @@ async function loadImage(file){
         URL.createObjectURL(file);
 
     });
+
+}
+function imageToCanvas(image){
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(image,0,0);
+
+    return {
+        canvas,
+        ctx
+    };
 
 }
 </script>
