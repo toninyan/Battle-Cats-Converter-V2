@@ -77,10 +77,16 @@ await loadImage(background);
 const bg =
 imageToCanvas(backgroundImage);
 
-alert(
-    bg.canvas.width +
-    " × " +
+const bgPixels =
+bg.ctx.getImageData(
+    0,
+    0,
+    bg.canvas.width,
     bg.canvas.height
+);
+
+alert(
+    bgPixels.data.length
 );
 
 }
