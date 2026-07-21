@@ -70,6 +70,38 @@ async function convert(){
         return;
 
     }
+    // ZIPを読み込む
+const zip = await JSZip.loadAsync(zipFile);
+
+// PNGだけ取得
+const images = [];
+
+for (const name in zip.files) {
+
+    if (name.toLowerCase().endsWith(".png")) {
+        images.push(name);
+    }
+
+}
+
+// 数字順
+images.sort((a, b) => {
+
+    const numA = parseInt(a.match(/\d+(?=\.[^.]+$)/)[0]);
+    const numB = parseInt(b.match(/\d+(?=\.[^.]+$)/)[0]);
+
+    return numA - numB;
+
+});
+
+//15fps
+const outputImages = [];
+
+for (let i = 0; i < images.length; i += 2) {
+
+    outputImages.push(images[i]);
+
+}
 
 const backgroundImage =
 await loadImage(background);
