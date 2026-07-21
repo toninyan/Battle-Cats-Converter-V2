@@ -85,8 +85,28 @@ bg.ctx.getImageData(
     bg.canvas.height
 );
 
+const firstImage =
+zip.file(outputImages[0]);
+
+const firstBlob =
+await firstImage.async("blob");
+
+const firstPNG =
+await loadImage(firstBlob);
+
+const cat =
+imageToCanvas(firstPNG);
+
+const catPixels =
+cat.ctx.getImageData(
+    0,
+    0,
+    cat.canvas.width,
+    cat.canvas.height
+);
+
 alert(
-    bgPixels.data.length
+    catPixels.data.length
 );
 
 }
